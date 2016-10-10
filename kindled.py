@@ -36,5 +36,4 @@ for root, dirs, files in os.walk(settings.FOLDER):
                     print(e)
                 else:
                     send_ebook(dst, False)
-                    send_ebook(dst, True)
             processed[join(root, file)] = True
