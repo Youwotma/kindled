@@ -22,14 +22,14 @@ for root, dirs, files in os.walk(settings.FOLDER):
     for file in files:
         fp = join(root, file)
         name, ext = splitext(file)
-        if ext in (".pdf", ".movi", '.epub', '.azw3') and fp not in processed:
+        if ext in (".pdf", ".mobi", '.epub', '.azw3') and fp not in processed:
             if ext == ".pdf":
                 send_ebook(join(root, file), True)
                 send_ebook(join(root, file), False)
-            elif ext == '.movi':
+            elif ext == '.mobi':
                 send_ebook(join(root, file), False)
             elif ext in ('.epub', '.azw3'):
-                dst = join('/tmp', '%s.pdf' % name)
+                dst = join('/tmp', '%s.mobi' % name)
                 try:
                     check_call(['ebook-convert', join(root, file), dst])
                 except CalledProcessError as e:
