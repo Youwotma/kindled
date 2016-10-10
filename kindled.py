@@ -10,6 +10,7 @@ processed = SqliteDict(expanduser('~/processed_books.sqlite'), autocommit=True)
 
 
 def send_ebook(book, convert=False):
+    print('sending %r' % book)
     gm = GMail(*settings.GMAIL_AUTH)
     m = Message("convert" if convert else "regular",
                 to=settings.KINDLE_EMAIL, text="foo",
