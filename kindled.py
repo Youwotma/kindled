@@ -21,8 +21,8 @@ def send_ebook(book, convert=False):
 for root, dirs, files in os.walk(settings.FOLDER):
     for file in files:
         fp = join(root, file)
-        name, ext = splitext(fp)
-        if ext in (".pdf", ".movi", '.epub', '.azw3') and name not in processed:
+        name, ext = splitext(file)
+        if ext in (".pdf", ".movi", '.epub', '.azw3') and fp not in processed:
             if ext == ".pdf":
                 send_ebook(join(root, file), True)
                 send_ebook(join(root, file), False)
