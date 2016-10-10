@@ -6,7 +6,7 @@ from os.path import join, splitext, expanduser
 from subprocess import check_call, CalledProcessError
 
 
-processed = SqliteDict(expanduser('~/processed_books.sqlite'), autocommit=True)
+processed = SqliteDict(expanduser('~/.processed_books.sqlite'), autocommit=True)
 
 
 def send_ebook(book, convert=False):
@@ -26,14 +26,15 @@ for root, dirs, files in os.walk(settings.FOLDER):
             if ext == ".pdf":
                 send_ebook(join(root, file), True)
                 send_ebook(join(root, file), False)
-            elif ext in ('.movi', '.azw3'):
+            elif ext == '.movi':
                 send_ebook(join(root, file), False)
-            elif ext == '.epub':
-                dst = join('/tmp', '%s.azw3' % name)
+            elif ext in ('.epub', '.azw3'):
+                dst = join('/tmp', '%s.pdf' % name)
                 try:
                     check_call(['ebook-convert', join(root, file), dst])
                 except CalledProcessError as e:
                     print(e)
                 else:
                     send_ebook(dst, False)
+                    send_ebook(dst, True)
             processed[join(root, file)] = True
